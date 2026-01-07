@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Peln— Contact</title>
+  <link rel="icon" type="image/png" href="/256x256.png">
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card-bg: #161616;
+      --text-main: #ffffff;
+      --text-dim: #a1a1a1;
+      --accent: #ffffff;
+      --input-bg: rgba(255, 255, 255, 0.05);
+      --radius: 12px;
+      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Navigation (Matches Home) --- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(10, 10, 10, 0.7);
+    }
+
+    .site-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-center a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-center a:hover, .nav-center a.is-active {
+      color: var(--text-main);
+    }
+
+    /* --- Contact Layout --- */
+    main.start {
+      padding: 160px 2rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      min-height: 90vh;
+    }
+
+    .start-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .start-grid.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Left Copy */
+    .start-copy h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .start-copy p {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      max-width: 400px;
+    }
+
+    /* Right Form */
+    .start-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .row.two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+    }
+
+    .muted {
+      font-weight: 400;
+      opacity: 0.5;
+      text-transform: lowercase;
+    }
+
+    input, textarea {
+      background: var(--input-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .cta-getStarted {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      padding: 1.2rem 2.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition);
+      margin-top: 1rem;
+    }
+
+    .cta-getStarted:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+    }
+
+    /* Success Notice Overlay */
+    .form-notice {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      background: #ffffff;
+      color: #000;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      display: none; /* Controlled by JS */
+    }
+
+    /* --- Footer --- */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .foot-heading {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    footer a {
+      color: var(--text-main);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: var(--transition);
+    }
+
+    footer a:hover { opacity: 0.6; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .start-grid { grid-template-columns: 1fr; gap: 40px; }
+      .row.two { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav">
+      <a href="pelnstudio.html">
+        <img src="./images/Gifs/peln.gif" width="80" alt="PELN" style="filter: invert(0);">
+      </a>
+      <div class="nav-center">
+        <a href="pelnstudio.html">Projects</a>
+        <a href="contact.html" class="is-active">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="start">
+    <section class="start-grid" id="contactSection">
+      
+      <!-- Left intro -->
+      <div class="start-copy">
+        <h1>Contact us</h1>
+        <p>We’re always open to new projects and ideas. Tell us what you’re building and we’ll come back with next steps.</p>
+        <p>Include a rough budget and timeline — a range is totally fine.</p>
+      </div>
+
+      <!-- Right form -->
+      <form class="start-form" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Web3Forms Config -->
+        <input type="hidden" name="access_key" value="b59cd76c-a336-4797-bd3f-65954797ab24">
+        <input type="hidden" name="from_name" value="VOYD Website">
+        <input type="hidden" name="subject" value="New VOYD inquiry">
+        <input type="hidden" name="redirect" value="https://voydworks.com/contact.html?sent=1">
+
+        <div class="row two">
+          <div class="field">
+            <label for="firstName">First name <span class="muted">(required)</span></label>
+            <input id="firstName" name="firstName" type="text" placeholder="Jane" required>
+          </div>
+          <div class="field">
+            <label for="lastName">Last name <span class="muted">(required)</span></label>
+            <input id="lastName" name="lastName" type="text" placeholder="Doe" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="email">Email <span class="muted">(required)</span></label>
+          <input id="email" name="email" type="email" placeholder="john@example.com" required>
+        </div>
+
+        <div class="row">
+          <label for="ig">Instagram handle</label>
+          <input id="ig" name="instagram" type="text" placeholder="@yourhandle">
+        </div>
+
+        <div class="row">
+          <label for="message">Tell us about your project <span class="muted">(required)</span></label>
+          <textarea id="message" name="message" rows="5" placeholder="Share your vision..." required></textarea>
+        </div>
+
+        <div class="row">
+          <button type="submit" class="cta-getStarted">Send Message</button>
+        </div>
+      </form>
+
+      <!-- Success notice -->
+      <div class="form-notice" id="formNotice">
+        <strong>Message sent.</strong> We’ll get back to you soon.
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot-col">
+      <div class="foot-heading">PELN Studio</div>
+      <div>© 2025 All Rights Reserved.</div>
+    </div>
+
+    <div class="foot-col">
+      <div class="foot-heading">Inquiries</div>
+      <a href="https://linktr.ee/voydworks" target="_blank">Linktree</a>
+      <a href="mailto:hello@voyd.com">Email us</a>
+    </div>
+
+    <div class="foot-col">
+      <div class="foot-heading">Social</div>
+      <a href="https://instagram.com/peln_mo" target="_blank">Instagram</a>
+      <a href="#">Twitter / X</a>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal animation on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const section = document.getElementById('contactSection');
+      setTimeout(() => {
+        section.classList.add('show');
+      }, 100);
+
+      // Check for success URL parameter
+      const params = new URLSearchParams(location.search);
+      if (params.get('sent') === '1') {
+        const note = document.getElementById('formNotice');
+        note.style.display = 'block';
+        
+        // Hide notice after 5 seconds
+        setTimeout(() => {
+          note.style.opacity = '0';
+          note.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => note.style.display = 'none', 500);
+        }, 5000);
+      }
+    });
+  </script>
+
+</body>
+</html>

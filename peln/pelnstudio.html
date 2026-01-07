@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PELN— Motion Design Studio</title>
+  <link rel="icon" type="image/png" href="/256x256.png">
+  <!-- Google Fonts: Inter for that clean, modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card-bg: #161616;
+      --text-main: #ffffff;
+      --text-dim: #a1a1a1;
+      --accent: #ffffff;
+      --radius: 12px;
+      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Navigation --- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(10, 10, 10, 0.7);
+    }
+
+    .site-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-center a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-center a:hover, .nav-center a.is-active {
+      color: var(--text-main);
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      padding: 160px 2rem 80px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      color: var(--text-dim);
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .cta-getStarted {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      padding: 1rem 2.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .cta-getStarted:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(213, 250, 7, 0.192);
+    }
+
+    /* --- Grid Section --- */
+    .videos {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+    }
+
+    #grid-long {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(3, 1fr); /* 3 looks more premium than 4 for studio work */
+    }
+
+    .video-item {
+      position: relative;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .video-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    /* Project Label Overlay */
+    .video-item::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.6);
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      opacity: 0;
+      transition: var(--transition);
+      transform: translateY(10px);
+    }
+
+    .video-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .video-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.7);
+    }
+
+    .video-item:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Footer --- */
+    footer {
+      max-width: 1200px;
+      margin: 100px auto 0;
+      padding: 4rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .foot-heading {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    footer a {
+      color: var(--text-main);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: var(--transition);
+    }
+
+    footer a:hover { opacity: 0.6; }
+
+    /* --- Back to Top --- */
+    .back-to-top-static {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+    }
+
+    .back-to-top-static a {
+      background: var(--card-bg);
+      color: white;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: var(--transition);
+    }
+
+    .back-to-top-static a:hover {
+      background: white;
+      color: black;
+    }
+
+    /* Responsive Grid */
+    @media (max-width: 1100px) { #grid-long { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px) { 
+      #grid-long { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .hero h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="site-nav">
+    <a href="pelnstudio.html">
+      <!-- Replaced with a placeholder if SVG missing -->
+      <img src="./images/logo/peln.svg" width="40" alt="PeLn" style="filter: invert(0);">
+    </a>
+    <div class="nav-center">
+      <a href="./home.html" class="is-active">Projects</a>
+      <a href="./contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <h1>Hey, We're PELN.</h1>
+  <p>A motion design studio crafting high-end visuals for startups, creators, and modern brands.</p>
+  <a href="./contact.html" class="cta-getStarted">Start a Project</a>
+</section>
+
+<section class="videos">
+  <h2 class="section-title">Selected Works</h2>
+
+  <div id="grid-long">
+    <!-- data-label allows us to show the title on hover via CSS -->
+    <div class="video-item" data-label="Uber">
+      <img src="./images/Gifs/Uber-ezgif.com-cut.gif" alt="Uber" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Framer">
+      <img src="./images/Gifs/Framer-ezgif.com-cut.gif" alt="Framer" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="OpenAi">
+      <img src="./images/Gifs/Comp13-ezgif.com-cut.gif" alt="OpenAi" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="AlfaAI">
+      <img src="./images/Gifs/AlfaAI.gif" alt="AlfaAI" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="YouTube">
+      <img src="./images/Gifs/YouTube.gif" alt="YouTube" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Discord">
+      <img src="./images/Gifs/Discord.gif" alt="Discord" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Click-Up">
+      <img src="./images/Gifs/Click-Up.gif" alt="Click-Up" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Airbnb">
+      <img src="./images/Gifs/Airbnb.gif" alt="Airbnb" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Uber">
+      <img src="./images/Gifs/Uber.gif" alt="Uber" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Microsoft">
+      <img src="./images/Gifs/Microsoft.gif" alt="Microsoft" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="Apple">
+      <img src="./images/Gifs/Apple.gif" alt="Apple" loading="lazy">
+    </div>
+
+    <div class="video-item" data-label="N8N">
+      <img src="./images/Gifs/N8N.gif" alt="N8N" loading="lazy">
+    </div>
+    
+  </div>
+</section>
+
+</main>
+
+<div class="back-to-top-static">
+  <a href="#">↑</a>
+</div>
+
+<footer class="simple-footer">
+  <div class="foot-col">
+    <div class="foot-heading">PELN Studio</div>
+    <div>© 2025 All Rights Reserved.</div>
+  </div>
+
+  <div class="foot-col">
+    <div class="foot-heading">Inquiries</div>
+    <a href="https://linktr.ee/voydworks" target="_blank">Linktree</a>
+    <a href="mailto:hello@voyd.com">Email us</a>
+  </div>
+
+  <div class="foot-col">
+    <div class="foot-heading">Social</div>
+    <a href="https://instagram.com/peln_mo" target="_blank">Instagram</a>
+    <a href="#">Twitter / X</a>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll to top
+  document.querySelector('.back-to-top-static a').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Optional: Intersection Observer to fade in items on scroll
+  const observerOptions = { threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.video-item').forEach(el => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(30px)";
+    el.style.transition = "all 0.6s ease-out";
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
